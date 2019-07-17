@@ -1,37 +1,58 @@
-## Welcome to GitHub Pages
+# ${Typesafe} %Config .Ops
 
-You can use the [editor on GitHub](https://github.com/typesafeconfigops/typesafeconfigops.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+[![codecov](https://codecov.io/gh/typesafeconfigops/TypesafeConfigOps/branch/master/graph/badge.svg)](https://codecov.io/gh/typesafeconfigops/TypesafeConfigOps)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/83a505b53f004ad19bcc55fe6d483b56)](https://app.codacy.com/app/lashchenko/TypesafeConfigOps?utm_source=github.com&utm_medium=referral&utm_content=typesafeconfigops/TypesafeConfigOps&utm_campaign=Badge_Grade_Dashboard)
+[![Build Status](https://travis-ci.org/typesafeconfigops/TypesafeConfigOps.svg?branch=master)](https://travis-ci.org/typesafeconfigops/TypesafeConfigOps)
+[![Download](https://api.bintray.com/packages/typesafeconfigops/maven/typesafeconfigops/images/download.svg)](https://bintray.com/typesafeconfigops/maven/typesafeconfigops/_latestVersion)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+### Usage
+```scala
+// build.sbt
+resolvers += Resolver.bintrayRepo("typesafeconfigops", "maven")
+libraryDependencies += "io.github.typesafeconfigops" %% "typesafeconfigops" % "0.1"
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### ConfigOptOps
+Import `TypesafeConfigOps.ConfigOptOps` allows to extract optional values from configuration.
 
-### Jekyll Themes
+```scala
+import TypesafeConfigOps.ConfigOptOps
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/typesafeconfigops/typesafeconfigops.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+private val cfg = ConfigFactory.parseString("""{ "i" = 1 }""")
+cfg.optInt("i") // Some(1)
+cfg.optInt("ix") // None
+```
 
-### Support or Contact
+### ConfigDefaultOps
+Import `TypesafeConfigOps.ConfigDefaultOps` allows to use default values for non existing paths in configuration.
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+```scala
+import TypesafeConfigOps.ConfigDefaultOps
+
+private val cfg = ConfigFactory.parseString("""{ "i" = 1 }""")
+cfg.getInt("i", 2) // 1
+cfg.getInt("ix", 2) // 2
+```
+### ConfigTemplateOps
+Import `TypesafeConfigOps.ConfigTemplateOps` allows to work with templates in configuration.
+
+```scala
+import TypesafeConfigOps.ConfigTemplateOps
+
+val cfg = ConfigFactory.parseString(
+  """
+    |{
+    |  code = <img ${imgSrc} ${imgHeight} ${imgWidth} ${imgBorder} />
+    |}
+  """.stripMargin)
+
+val code = cfg
+  .resolveTemplate(
+    "imgSrc" -> "src='%s'",
+    "imgHeight" -> "height='%dpx'",
+    "imgWidth" -> "width='%dpx'",
+    "imgBorder" -> "border='#%X%X%X'")
+  .formatTemplate("code", "https://google.com/logo.png", 100, 200, 255, 255, 255)
+
+code // "<img src='https://google.com/logo.png' height='100px' width='200px' border='#FFFFFF' />"
+```
