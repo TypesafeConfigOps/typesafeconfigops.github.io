@@ -5,11 +5,14 @@
 [![Build Status](https://travis-ci.org/typesafeconfigops/TypesafeConfigOps.svg?branch=master)](https://travis-ci.org/typesafeconfigops/TypesafeConfigOps)
 [![Download](https://api.bintray.com/packages/typesafeconfigops/maven/typesafeconfigops/images/download.svg)](https://bintray.com/typesafeconfigops/maven/typesafeconfigops/_latestVersion)
 
+### Source code
+[TypesafeConfigOps](https://github.com/typesafeconfigops/TypesafeConfigOps)
+
 ### Usage
 ```scala
 // build.sbt
 resolvers += Resolver.bintrayRepo("typesafeconfigops", "maven")
-libraryDependencies += "io.github.typesafeconfigops" %% "typesafeconfigops" % "0.1"
+libraryDependencies += "io.github.typesafeconfigops" %% "typesafe-config-ops" % "0.1.2"
 ```
 
 ### ConfigOptOps
