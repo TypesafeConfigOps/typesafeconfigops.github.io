@@ -1,7 +1,6 @@
 # ${Typesafe} %Config .Ops
 
 [![codecov](https://codecov.io/gh/typesafeconfigops/TypesafeConfigOps/branch/master/graph/badge.svg)](https://codecov.io/gh/typesafeconfigops/TypesafeConfigOps)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/83a505b53f004ad19bcc55fe6d483b56)](https://app.codacy.com/app/lashchenko/TypesafeConfigOps?utm_source=github.com&utm_medium=referral&utm_content=typesafeconfigops/TypesafeConfigOps&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.org/typesafeconfigops/TypesafeConfigOps.svg?branch=master)](https://travis-ci.org/typesafeconfigops/TypesafeConfigOps)
 
 ### Source code
@@ -10,11 +9,11 @@
 ### Usage
 ```scala
 // build.sbt
-libraryDependencies += "io.github.typesafeconfigops" %% "typesafe-config-ops" % "1.4.1"
+libraryDependencies += "io.github.typesafeconfigops" %% "typesafe-config-ops" % "3.0"
 ```
 
 ### ConfigOptOps
-Import `TypesafeConfigOps.ConfigOptOps` allows to extract optional values from configuration.
+Import `TypesafeConfigOps.*` or `ConfigOptOps.*` allows to extract optional values from configuration.
 
 ```scala
 import TypesafeConfigOps.ConfigOptOps
@@ -25,7 +24,7 @@ cfg.optInt("ix") // None
 ```
 
 ### ConfigDefaultOps
-Import `TypesafeConfigOps.ConfigDefaultOps` allows to use default values for non existing paths in configuration.
+Import `TypesafeConfigOps.*` or `ConfigDefaultOps.*` allows using default values for non-existing paths in configuration.
 
 ```scala
 import TypesafeConfigOps.ConfigDefaultOps
@@ -35,7 +34,7 @@ cfg.getInt("i", 2) // 1
 cfg.getInt("ix", 2) // 2
 ```
 ### ConfigTemplateOps
-Import `TypesafeConfigOps.ConfigTemplateOps` allows to work with templates in configuration.
+Import `TypesafeConfigOps.*` or `ConfigTemplateOps.*` allows to work with templates in configuration.
 
 ```scala
 import TypesafeConfigOps.ConfigTemplateOps
