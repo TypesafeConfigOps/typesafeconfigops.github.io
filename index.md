@@ -9,7 +9,7 @@
 ### Usage
 ```scala
 // build.sbt
-libraryDependencies += "io.github.typesafeconfigops" %% "typesafe-config-ops" % "3.0"
+libraryDependencies += "io.github.typesafeconfigops" %% "typesafe-config-ops" % "3.1"
 ```
 
 ### ConfigOptOps
